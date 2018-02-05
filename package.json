@@ -1,0 +1,15 @@
+{
+  "name": "banshee",
+  "version": "1.0.0",
+  "description": "A bot to interact with a companion device",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/99xt/banshee.git"
+  },
+  "author": "Rangitha Kuruppu",
+  "license": "MIT",
+  "dependencies": {
+    "botbuilder": "^3.14.0",
+    "restify": "^6.3.4"
+  }
+}
