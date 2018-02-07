@@ -1,0 +1,10 @@
+{
+    "complete_conversation": "See you later!",
+    "incomplete_conversation": "Maybe it's not the right time for a conversation. Let's try again later!",
+    "initial_prompt": "What do you want to do today?",
+    "menu_items": "Change trigger|Help",
+    "repeat_confirm": "Do you want to do something else?",
+    "reprompt": "What else do you want to do?",
+    "retry_prompt": "I didn't understand you. Can you choose from these?",
+    "trigger_confirm": "This will take you back to the menu. Are you sure?"
+}
