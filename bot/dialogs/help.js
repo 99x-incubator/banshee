@@ -1,11 +1,11 @@
 'use strict';
 
 const builder = require('botbuilder');
-const library = new builder.Library('wail');
+const library = new builder.Library('help');
 
 library.dialog('root', [
     (session) => {
-        session.endDialog('intro');
+        session.endDialog('not_implemented');
     }
 ]);
 
