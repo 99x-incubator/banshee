@@ -9,18 +9,27 @@ const connector = new builder.ChatConnector({
 
 const bot = new builder.UniversalBot(connector, [
     (session) => {
-        session.beginDialog('wail:root');
+        session.beginDialog('menu:root');
     },
-    (session, results)=> {
+    (session, results) => {
         session.endConversation();
     }
 ]);
+
+bot.customAction({
+    matches: /!/gi,
+    onSelectAction: (session, args, next) => {
+        session.send('wailing');
+    }
+})
 
 bot.set('localizerSettings', {
     botLocalePath: './bot/locale',
     defaultLocale: 'en'
 });
 
-bot.library(require('./dialogs/wail'));
+bot.library(require('./dialogs/menu'));
+bot.library(require('./dialogs/help'));
+bot.library(require('./dialogs/changeTrigger'));
 
 module.exports = exports = bot;
