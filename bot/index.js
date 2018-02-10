@@ -7,6 +7,8 @@ const connector = new builder.ChatConnector({
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
+const inMemoryStorage = new builder.MemoryBotStorage();
+
 const bot = new builder.UniversalBot(connector, [
     (session) => {
         session.beginDialog('menu:root');
@@ -16,16 +18,18 @@ const bot = new builder.UniversalBot(connector, [
     }
 ]);
 
+bot.set('storage', inMemoryStorage);
+
+bot.set('localizerSettings', {
+    botLocalePath: './bot/locale',
+    defaultLocale: 'en'
+});
+
 bot.customAction({
     matches: /!/gi,
     onSelectAction: (session, args, next) => {
         session.send('wailing');
     }
-})
-
-bot.set('localizerSettings', {
-    botLocalePath: './bot/locale',
-    defaultLocale: 'en'
 });
 
 bot.library(require('./dialogs/menu'));
