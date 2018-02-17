@@ -4,7 +4,7 @@ const builder = require('botbuilder');
 const library = new builder.Library('menu');
 
 const menu = [
-    'changeTrigger',
+    'trigger',
     'help'
 ];
 

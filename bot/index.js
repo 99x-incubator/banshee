@@ -34,6 +34,6 @@ bot.customAction({
 
 bot.library(require('./dialogs/menu'));
 bot.library(require('./dialogs/help'));
-bot.library(require('./dialogs/changeTrigger'));
+bot.library(require('./dialogs/trigger'));
 
 module.exports = exports = bot;
