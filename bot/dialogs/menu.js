@@ -11,7 +11,7 @@ const menu = [
 library.dialog('root', [
     (session, args) => {
         const prompt = (args && args.reprompt) ? 'welcome_reprompt' : 'welcome_prompt',
-            items = session.localizer.gettext(session.preferredLocale(), 'menu_items', library.name);
+            items = session.localizer.gettext(session.preferredLocale(), 'menu_options', library.name);
 
         builder.Prompts.choice(session, prompt, items, {
             listStyle: builder.ListStyle.button,

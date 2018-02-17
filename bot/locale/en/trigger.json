@@ -1,8 +1,8 @@
 {
     "change_trigger_prompt": "Do you want to change the trigger key?",
     "current_trigger": "Your current trigger key is:",
-    "enter_trigger_prompt": "Please enter the new trigger key:",
-    "enter_trigger_reprompt": "Please enter a single alphanumeric or a special character:",
+    "enter_trigger_prompt": "Please enter the new trigger key. A trigger should be a single printable character:",
+    "enter_trigger_reprompt": "Please enter a single alphanumeric or a special character as the trigger key:",
     "incomplete_dialog": "Maybe this is not what you expected. Let's try again later!",
     "new_trigger": "Your new trigger key is:"
 }
