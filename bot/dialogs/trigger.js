@@ -5,10 +5,10 @@ const library = new builder.Library('trigger');
 
 library.dialog('root', [
     (session) => {
-        const triggerKey = '!',
+        const { trigger } = session.userData,
             message = session.localizer.gettext(session.preferredLocale(), 'current_trigger', library.name);
 
-        session.send(`${message} '${triggerKey}'`);
+        session.send(`${message} '${trigger}'`);
         builder.Prompts.confirm(session, 'change_trigger_prompt', {
             maxRetries: 1
         });
@@ -28,10 +28,11 @@ library.dialog('root', [
         }
     },
     (session, results) => {
-        const triggerKey = results.response,
+        const trigger = results.response,
             message = session.localizer.gettext(session.preferredLocale(), 'new_trigger', library.name);
 
-        session.endDialog(`${message} ${triggerKey}`);
+        session.userData.trigger = trigger;
+        session.endDialog(`${message} ${trigger}`);
     }
 ]);
 
@@ -49,7 +50,7 @@ library.dialog('update', [
             matched = response.match(/[\w]/);
 
         if (matched) {
-            session.endDialogWithResult({response});
+            session.endDialogWithResult({ response });
         }
         else {
             // Try again
