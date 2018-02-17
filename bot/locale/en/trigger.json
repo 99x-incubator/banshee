@@ -4,5 +4,6 @@
     "enter_trigger_prompt": "Please enter the new trigger key. A trigger should be a single printable character:",
     "enter_trigger_reprompt": "Please enter a single alphanumeric or a special character as the trigger key:",
     "incomplete_dialog": "Maybe this is not what you expected. Let's try again later!",
-    "new_trigger": "Your new trigger key is:"
+    "new_trigger": "Your new trigger key is:",
+    "same_trigger": "No changes made. Your current trigger is:"
 }

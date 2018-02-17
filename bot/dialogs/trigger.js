@@ -28,11 +28,20 @@ library.dialog('root', [
         }
     },
     (session, results) => {
-        const trigger = results.response,
-            message = session.localizer.gettext(session.preferredLocale(), 'new_trigger', library.name);
+        const currentTrigger = session.userData.trigger,
+            newTrigger = results.response;
+        let localizationKey;
 
-        session.userData.trigger = trigger;
-        session.endDialog(`${message} ${trigger}`);
+        if (newTrigger === currentTrigger) {
+            localizationKey = 'same_trigger';
+        }
+        else {
+            localizationKey = 'new_trigger';
+            session.userData.trigger = newTrigger;
+        }
+
+        const message = session.localizer.gettext(session.preferredLocale(), localizationKey, library.name);
+        session.endDialog(`${message} ${newTrigger}`);
     }
 ]);
 
