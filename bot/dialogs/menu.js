@@ -10,40 +10,34 @@ const menu = [
 
 library.dialog('root', [
     (session, args) => {
-        const prompt = (args && args.reprompt) ? 'reprompt' : 'initial_prompt',
-            items = session.localizer.gettext(session.preferredLocale(), 'menu_items', 'menu');
+        const prompt = (args && args.reprompt) ? 'welcome_reprompt' : 'welcome_prompt',
+            items = session.localizer.gettext(session.preferredLocale(), 'menu_items', library.name);
 
-        builder.Prompts.choice(session, prompt, items,
-            { listStyle: builder.ListStyle.button, maxRetries: 1, retryPrompt: 'retry_prompt', });
+        builder.Prompts.choice(session, prompt, items, {
+            listStyle: builder.ListStyle.button,
+            maxRetries: 1,
+            retryPrompt: 'welcome_retry'
+        });
     },
     (session, results) => {
-        if (results.response) {
-            const { index } = results.response,
-                targetDialog = menu[index];
-
+        if (results.resumed === builder.ResumeReason.notCompleted) {
+            // Too many retry attempts. Kick the user out
+            session.endDialog('incomplete_dialog');
+        }
+        else if (results.response) {
+            const targetDialog = menu[results.response.index];
             session.beginDialog(`${targetDialog}:root`);
         }
-        else if (results.resumed === builder.ResumeReason.notCompleted) {
-            session.endConversation('incomplete_conversation');
-        }
     },
     (session, results) => {
-        builder.Prompts.confirm(session, 'repeat_confirm', { maxRetries: 1 });
-    },
-    (session, results) => {
-        if (results.response) {
-            session.replaceDialog('menu:root', { reprompt: true });
-        }
-        else if (results.resumed === builder.ResumeReason.notCompleted) {
-            session.endConversation('incomplete_conversation');
-        }
-        else {
-            session.endConversation('complete_conversation');
-        }
+        // Show the menu again
+        session.replaceDialog('menu:root', {
+            reprompt: true
+        });
     }
 ]).triggerAction({
     matches: /^menu$/i,
-    confirmPrompt: 'trigger_confirm'
+    confirmPrompt: 'menu_trigger_confirm'
 });;
 
 module.exports = library;
