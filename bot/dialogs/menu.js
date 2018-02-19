@@ -3,7 +3,7 @@
 const builder = require('botbuilder');
 const library = new builder.Library('menu');
 
-const menu = [
+const menu_options = [
     'trigger',
     'help'
 ];
@@ -11,9 +11,9 @@ const menu = [
 library.dialog('root', [
     (session, args) => {
         const prompt = (args && args.reprompt) ? 'welcome_reprompt' : 'welcome_prompt',
-            items = session.localizer.gettext(session.preferredLocale(), 'menu_options', library.name);
+            options = session.localizer.gettext(session.preferredLocale(), 'menu_options', library.name);
 
-        builder.Prompts.choice(session, prompt, items, {
+        builder.Prompts.choice(session, prompt, options, {
             listStyle: builder.ListStyle.button,
             maxRetries: 1,
             retryPrompt: 'welcome_retry'
@@ -25,7 +25,7 @@ library.dialog('root', [
             session.endDialog('incomplete_dialog');
         }
         else if (results.response) {
-            const targetDialog = menu[results.response.index];
+            const targetDialog = menu_options[results.response.index];
             session.beginDialog(`${targetDialog}:root`);
         }
     },
