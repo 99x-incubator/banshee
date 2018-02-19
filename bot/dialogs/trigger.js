@@ -56,9 +56,10 @@ library.dialog('update', [
     },
     (session, results) => {
         const { response } = results,
-            matched = response.match(/[\w]/);
+            matched = response.match(/^([_|]|[^\w|\s])$/);
 
         if (matched) {
+            // Matches any ASCII printable special character
             session.endDialogWithResult({ response });
         }
         else {
