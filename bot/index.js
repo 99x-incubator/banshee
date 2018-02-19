@@ -12,7 +12,8 @@ const inMemoryStorage = new builder.MemoryBotStorage();
 const bot = new builder.UniversalBot(connector, [
     (session) => {
         // Set initial data
-        session.userData.trigger = '!';
+        session.userData.userTrigger = '!';
+        session.userData.defaultTrigger = '!';
 
         session.beginDialog('menu:root');
     },

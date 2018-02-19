@@ -3,14 +3,25 @@
 const builder = require('botbuilder');
 const library = new builder.Library('trigger');
 
+const trigger_options = [
+    'update',
+    'reset',
+    'back'
+];
+
 library.dialog('root', [
     (session) => {
-        const { trigger } = session.userData,
-            message = session.localizer.gettext(session.preferredLocale(), 'current_trigger', library.name);
+        const { userTrigger } = session.userData,
+            message = session.localizer.gettext(session.preferredLocale(), 'current_trigger', library.name),
+            prompt = session.localizer.gettext(session.preferredLocale(), 'change_trigger_prompt', library.name),
+            options = session.localizer.gettext(session.preferredLocale(), 'change_trigger_options', library.name);
 
-        session.send(`${message} '${trigger}'`);
-        builder.Prompts.confirm(session, 'change_trigger_prompt', {
-            maxRetries: 1
+        session.send(`${message} '${userTrigger}'`);
+
+        builder.Prompts.choice(session, 'change_trigger_prompt', options, {
+            listStyle: builder.ListStyle.button,
+            maxRetries: 1,
+            retryPrompt: 'change_trigger_retry'
         });
     },
     (session, results) => {
@@ -19,16 +30,19 @@ library.dialog('root', [
             session.endDialog('incomplete_dialog');
         }
         else if (results.response) {
-            // User answered in the affirmative
-            session.beginDialog('trigger:update');
-        }
-        else {
-            // User answered in the negative
-            session.endDialog();
+            const option = trigger_options[results.response.index];
+
+            if (option === 'back') {
+                session.endDialog();
+            }
+            else {
+                const targetDialog = option;
+                session.beginDialog(`trigger:${targetDialog}`);
+            }
         }
     },
     (session, results) => {
-        const currentTrigger = session.userData.trigger,
+        const currentTrigger = session.userData.userTrigger,
             newTrigger = results.response;
         let localizationKey;
 
@@ -37,7 +51,7 @@ library.dialog('root', [
         }
         else {
             localizationKey = 'new_trigger';
-            session.userData.trigger = newTrigger;
+            session.userData.userTrigger = newTrigger;
         }
 
         const message = session.localizer.gettext(session.preferredLocale(), localizationKey, library.name);
@@ -68,6 +82,13 @@ library.dialog('update', [
                 reprompt: true
             });
         }
+    }
+]);
+
+library.dialog('reset', [
+    (session) => {
+        const { defaultTrigger } = session.userData;
+        session.endDialogWithResult({ response: defaultTrigger });
     }
 ]);
 

@@ -1,5 +1,7 @@
 {
+    "change_trigger_options": "Select a new key|Reset to default|Go back",
     "change_trigger_prompt": "Do you want to change the trigger key?",
+    "change_trigger_retry": "I didn't understand you. Can you choose from these?",
     "current_trigger": "Your current trigger key is:",
     "enter_trigger_prompt": "Please enter the new trigger key. A trigger should be a single special character:",
     "enter_trigger_reprompt": "Please enter a single special character such as ! or $:",
