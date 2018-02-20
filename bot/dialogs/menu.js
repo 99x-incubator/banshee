@@ -35,9 +35,10 @@ library.dialog('root', [
             reprompt: true
         });
     }
-]).triggerAction({
+])
+.triggerAction({
     matches: /^menu$/i,
     confirmPrompt: 'menu_trigger_confirm'
-});;
+});
 
 module.exports = library;
