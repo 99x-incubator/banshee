@@ -4,7 +4,7 @@ const builder = require('botbuilder');
 const library = new builder.Library('wail');
 
 library.dialog('wail', (session, args) => {
-    session.endDialog("wailing");
+    session.endConversation("wailing");
 })
 .triggerAction({
     onFindAction: (context, callback) => {
