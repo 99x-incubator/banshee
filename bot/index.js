@@ -29,15 +29,9 @@ bot.set('localizerSettings', {
     defaultLocale: 'en'
 });
 
-bot.customAction({
-    matches: /!/gi,
-    onSelectAction: (session, args, next) => {
-        session.send('wailing');
-    }
-});
-
-bot.library(require('./dialogs/menu'));
 bot.library(require('./dialogs/help'));
+bot.library(require('./dialogs/menu'));
 bot.library(require('./dialogs/trigger'));
+bot.library(require('./dialogs/wail'));
 
 module.exports = exports = bot;
