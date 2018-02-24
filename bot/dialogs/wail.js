@@ -3,7 +3,7 @@
 const builder = require('botbuilder');
 const library = new builder.Library('wail');
 
-library.dialog('wail', (session, args) => {
+library.dialog('root', (session, args) => {
     session.endConversation("wailing");
 })
 .triggerAction({

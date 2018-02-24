@@ -4,6 +4,7 @@ const builder = require('botbuilder');
 const library = new builder.Library('menu');
 
 const menu_options = [
+    'wail',
     'trigger',
     'help'
 ];
