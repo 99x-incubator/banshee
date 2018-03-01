@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "botbuilder": "^3.14.0",
+    "mongo-bot-storage": "0.0.4",
     "restify": "^6.3.4"
   }
 }
