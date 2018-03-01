@@ -11,12 +11,12 @@ const trigger_options = [
 
 library.dialog('root', [
     (session) => {
-        const { userTrigger } = session.userData,
+        const { userTrigger, defaultTrigger } = session.userData,
             message = session.localizer.gettext(session.preferredLocale(), 'current_trigger', library.name),
             prompt = session.localizer.gettext(session.preferredLocale(), 'change_trigger_prompt', library.name),
             options = session.localizer.gettext(session.preferredLocale(), 'change_trigger_options', library.name);
 
-        session.send(`${message} '${userTrigger}'`);
+        session.send(`${message} '${userTrigger || defaultTrigger}'`);
 
         builder.Prompts.choice(session, 'change_trigger_prompt', options, {
             listStyle: builder.ListStyle.button,
