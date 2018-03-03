@@ -5,8 +5,7 @@ const library = new builder.Library('wail');
 
 library.dialog('root', (session, args) => {
     session.endConversation("wailing");
-})
-.triggerAction({
+}).triggerAction({
     onFindAction: (context, callback) => {
         const message = context.message.text,
             { userTrigger } = context.userData;
@@ -24,4 +23,4 @@ library.dialog('root', (session, args) => {
     }
 });
 
-module.exports = library;
+module.exports = exports = library;

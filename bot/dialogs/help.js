@@ -9,4 +9,4 @@ library.dialog('root', [
     }
 ]);
 
-module.exports = library;
+module.exports = exports = library;
