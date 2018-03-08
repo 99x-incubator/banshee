@@ -1,7 +1,7 @@
 {
     "farewell": "Have a good day!",
     "incomplete_dialog": "Maybe it's not the right time for a conversation. Let's try again later!",
-    "menu_options": "Make me wail!|Manage trigger|Help|Nothing really, thanks!",
+    "menu_options": "Make me wail!|Manage trigger|I need some help|Nothing really, thanks!",
     "menu_trigger_confirm": "This will take you back to the menu. Are you sure?",
     "welcome_prompt": "What do you want to do today?",
     "welcome_reprompt": "Anything else you want to do?",
