@@ -92,4 +92,4 @@ library.dialog('reset', [
     }
 ]);
 
-module.exports = library;
+module.exports = exports = library;

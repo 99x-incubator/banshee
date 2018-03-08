@@ -1,7 +1,11 @@
 'use strict';
 
+const dotenv = require('dotenv-safe');
 const builder = require('botbuilder');
 const { MongoDbBotStorage, MongoDBStorageClient } = require("mongo-bot-storage");
+
+// Load environment variables from .env file
+dotenv.config();
 
 const connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
@@ -11,8 +15,7 @@ const connector = new builder.ChatConnector({
 const bot = new builder.UniversalBot(connector, [
     (session) => {
         // Set initial data
-        session.userData.defaultTrigger = '!';
-
+        session.userData.defaultTrigger = process.env.DEFAULT_TRIGGER;
         session.beginDialog('menu:root');
     },
     (session, results) => {
@@ -21,7 +24,7 @@ const bot = new builder.UniversalBot(connector, [
 ]);
 
 bot.set("storage", new MongoDbBotStorage(new MongoDBStorageClient({
-    url: "mongodb://localhost:27017/banshee",
+    url: process.env.DATABASE_URL,
     mongoOptions: {}
 })));
 
