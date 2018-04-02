@@ -16,6 +16,7 @@ const bot = new builder.UniversalBot(connector, [
     (session) => {
         // Set initial data
         session.userData.defaultTrigger = process.env.DEFAULT_TRIGGER;
+
         session.beginDialog('menu:root');
     },
     (session, results) => {
@@ -23,7 +24,7 @@ const bot = new builder.UniversalBot(connector, [
     }
 ]);
 
-bot.set("storage", new MongoDbBotStorage(new MongoDBStorageClient({
+bot.set('storage', new MongoDbBotStorage(new MongoDBStorageClient({
     url: process.env.DATABASE_URL,
     mongoOptions: {}
 })));
