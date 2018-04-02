@@ -25,20 +25,19 @@ library.dialog('root', [
         });
     },
     (session, results) => {
+        const { index } = results.response,
+            lastOption = trigger_options.length - 1;
+
         if (results.resumed === builder.ResumeReason.notCompleted) {
             // Too many retry attempts. Kick the user out
             session.endDialog('incomplete_dialog');
         }
+        else if (index === lastOption) {
+            session.endDialog();
+        }
         else if (results.response) {
-            const option = trigger_options[results.response.index];
-
-            if (option === 'back') {
-                session.endDialog();
-            }
-            else {
-                const targetDialog = option;
-                session.beginDialog(`trigger:${targetDialog}`);
-            }
+            const targetDialog = trigger_options[index];
+            session.beginDialog(`trigger:${targetDialog}`);
         }
     },
     (session, results) => {
