@@ -82,7 +82,9 @@ library.dialog('update', [
             });
         }
     }
-]);
+]).beginDialogAction('triggerUpdateHelpAction', 'triggerUpdateHelp', {
+    matches: /^help$/i
+});
 
 library.dialog('reset', [
     (session) => {
@@ -90,5 +92,13 @@ library.dialog('reset', [
         session.endDialogWithResult({ response: defaultTrigger });
     }
 ]);
+
+// Contextual help for trigger update
+library.dialog('triggerUpdateHelp',
+    (session, args, next) => {
+        session.send('trigger_update_help');
+        session.endDialog('trigger_update_further_help');
+    }
+);
 
 module.exports = exports = library;

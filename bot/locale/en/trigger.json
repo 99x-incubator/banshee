@@ -3,9 +3,11 @@
     "change_trigger_prompt": "Do you want to change the trigger key?",
     "change_trigger_retry": "I didn't understand you. Can you choose from these?",
     "current_trigger": "Your current trigger key is:",
-    "enter_trigger_prompt": "Please enter the new trigger key. A trigger should be a single special character:",
-    "enter_trigger_reprompt": "Please enter a single special character such as ! or $:",
+    "enter_trigger_prompt": "Please enter the new trigger key. A trigger should be a single special character: (idea)",
+    "enter_trigger_reprompt": "Please enter a single special character such as '!' or '$': (idea)",
     "incomplete_dialog": "Maybe this is not what you expected. Let's try again later!",
     "new_trigger": "Your new trigger key is:",
-    "same_trigger": "No changes made. Your current trigger is:"
+    "same_trigger": "No changes made. Your current trigger is:",
+    "trigger_update_further_help": "Just make sure it's something easy to remember but somewhat out of the way",
+    "trigger_update_help": "A trigger key can be a single printable special character such as '!', '$', or '&'"
 }
