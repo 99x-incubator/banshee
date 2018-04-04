@@ -10,6 +10,11 @@ library.dialog('root', [
         session.send('contextual_help');
         session.endDialog('outro');
     }
-]);
+]).triggerAction({
+    matches: /^help$/i,
+    onSelectAction: (session, args, next) => {
+        session.beginDialog(args.action, args);
+    }
+});
 
 module.exports = exports = library;
