@@ -5,7 +5,10 @@ const library = new builder.Library('help');
 
 library.dialog('root', [
     (session) => {
-        session.endDialog('not_implemented');
+        session.send('intro');
+        session.send('terminology');
+        session.send('contextual_help');
+        session.endDialog('outro');
     }
 ]);
 
