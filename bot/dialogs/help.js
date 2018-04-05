@@ -8,6 +8,7 @@ library.dialog('root', [
         session.send('intro');
         session.send('terminology');
         session.send('contextual_help');
+        session.send('cancelling');
         session.endDialog('outro');
     }
 ]).triggerAction({
