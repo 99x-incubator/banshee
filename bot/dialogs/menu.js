@@ -46,6 +46,8 @@ library.dialog('root', [
 ]).triggerAction({
     matches: /^menu$/i,
     confirmPrompt: 'menu_trigger_confirm'
+}).endConversationAction('endConversationAction', 'farewell', {
+    matches: /^cancel$|^nevermind$|^goodbye$/i
 });
 
 module.exports = exports = library;

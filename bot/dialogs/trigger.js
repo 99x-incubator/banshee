@@ -48,7 +48,7 @@ library.dialog('root', [
             const currentTrigger = session.userData.userTrigger,
                 newTrigger = results.response;
             let localizationKey;
-            
+
             if (newTrigger === currentTrigger) {
                 localizationKey = 'same_trigger';
             }
@@ -62,7 +62,7 @@ library.dialog('root', [
         }
     }
 ]).cancelAction('cancelChangeTriggerAction', 'cancel_confirmation', {
-    matches: /^nevermind$|^cancel$|^exit$/i
+    matches: /^cancel$|^nevermind$|^exit$/i
 });
 
 library.dialog('update', [
@@ -92,7 +92,7 @@ library.dialog('update', [
 ]).beginDialogAction('triggerUpdateHelpAction', 'triggerUpdateHelp', {
     matches: /^help$/i
 }).cancelAction('cancelTriggerUpdateAction', 'cancel_confirmation', {
-    matches: /^nevermind$|^cancel$|^exit$/i
+    matches: /^cancel$|^nevermind$|^exit$/i
 });
 
 library.dialog('reset', [
