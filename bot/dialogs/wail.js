@@ -3,9 +3,11 @@
 const builder = require('botbuilder');
 const library = new builder.Library('wail');
 
-library.dialog('root', (session, args) => {
-    session.endConversation("wailing");
-}).triggerAction({
+library.dialog('root', [
+    (session, args) => {
+        session.endConversation("wailing");
+    }
+]).triggerAction({
     onFindAction: (context, callback) => {
         const message = context.message.text,
             { userTrigger } = context.userData;

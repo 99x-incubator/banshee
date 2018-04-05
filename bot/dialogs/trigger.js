@@ -25,39 +25,45 @@ library.dialog('root', [
         });
     },
     (session, results) => {
+        const { index } = results.response,
+            lastOption = trigger_options.length - 1;
+
         if (results.resumed === builder.ResumeReason.notCompleted) {
             // Too many retry attempts. Kick the user out
             session.endDialog('incomplete_dialog');
         }
+        else if (index === lastOption) {
+            session.endDialog();
+        }
         else if (results.response) {
-            const option = trigger_options[results.response.index];
-
-            if (option === 'back') {
-                session.endDialog();
-            }
-            else {
-                const targetDialog = option;
-                session.beginDialog(`trigger:${targetDialog}`);
-            }
+            const targetDialog = trigger_options[index];
+            session.beginDialog(`trigger:${targetDialog}`);
         }
     },
-    (session, results) => {
-        const currentTrigger = session.userData.userTrigger,
-            newTrigger = results.response;
-        let localizationKey;
-
-        if (newTrigger === currentTrigger) {
-            localizationKey = 'same_trigger';
+    (session, results, next) => {
+        if (results.resumed === builder.ResumeReason.canceled) {
+            session.endDialog();
         }
         else {
-            localizationKey = 'new_trigger';
-            session.userData.userTrigger = newTrigger;
-        }
+            const currentTrigger = session.userData.userTrigger,
+                newTrigger = results.response;
+            let localizationKey;
 
-        const message = session.localizer.gettext(session.preferredLocale(), localizationKey, library.name);
-        session.endDialog(`${message} ${newTrigger}`);
+            if (newTrigger === currentTrigger) {
+                localizationKey = 'same_trigger';
+            }
+            else {
+                localizationKey = 'new_trigger';
+                session.userData.userTrigger = newTrigger;
+            }
+
+            const message = session.localizer.gettext(session.preferredLocale(), localizationKey, library.name);
+            session.endDialog(`${message} ${newTrigger}`);
+        }
     }
-]);
+]).cancelAction('cancelChangeTriggerAction', 'cancel_confirmation', {
+    matches: /^cancel$|^nevermind$|^exit$/i
+});
 
 library.dialog('update', [
     (session, args) => {
@@ -83,7 +89,11 @@ library.dialog('update', [
             });
         }
     }
-]);
+]).beginDialogAction('triggerUpdateHelpAction', 'triggerUpdateHelp', {
+    matches: /^help$/i
+}).cancelAction('cancelTriggerUpdateAction', 'cancel_confirmation', {
+    matches: /^cancel$|^nevermind$|^exit$/i
+});
 
 library.dialog('reset', [
     (session) => {
@@ -91,5 +101,13 @@ library.dialog('reset', [
         session.endDialogWithResult({ response: defaultTrigger });
     }
 ]);
+
+// Contextual help for trigger update
+library.dialog('triggerUpdateHelp',
+    (session, args, next) => {
+        session.send('trigger_update_help');
+        session.endDialog('trigger_update_further_help');
+    }
+);
 
 module.exports = exports = library;

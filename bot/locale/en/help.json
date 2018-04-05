@@ -1,3 +1,7 @@
 {
-    "not_implemented": "This feature is not implemented yet!"
+    "cancelling": "If you don't want to answer any of my questions, you could always ask me to _cancel_",
+    "contextual_help": "If you ever see the (idea) emoji somewhere, you could ask for more specific help by asking for it. Just say _help_!",
+    "intro": "Hi I'm Banshee! I'm a simple bot to help you trigger an alarm or a buzzer",
+    "outro": "That's it for now!",
+    "terminology": "You use a trigger key to sound the buzzer\u2014that is you make me wail!"
 }
