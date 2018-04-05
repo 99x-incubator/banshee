@@ -40,23 +40,30 @@ library.dialog('root', [
             session.beginDialog(`trigger:${targetDialog}`);
         }
     },
-    (session, results) => {
-        const currentTrigger = session.userData.userTrigger,
-            newTrigger = results.response;
-        let localizationKey;
-
-        if (newTrigger === currentTrigger) {
-            localizationKey = 'same_trigger';
+    (session, results, next) => {
+        if (results.resumed === builder.ResumeReason.canceled) {
+            session.endDialog();
         }
         else {
-            localizationKey = 'new_trigger';
-            session.userData.userTrigger = newTrigger;
-        }
+            const currentTrigger = session.userData.userTrigger,
+                newTrigger = results.response;
+            let localizationKey;
+            
+            if (newTrigger === currentTrigger) {
+                localizationKey = 'same_trigger';
+            }
+            else {
+                localizationKey = 'new_trigger';
+                session.userData.userTrigger = newTrigger;
+            }
 
-        const message = session.localizer.gettext(session.preferredLocale(), localizationKey, library.name);
-        session.endDialog(`${message} ${newTrigger}`);
+            const message = session.localizer.gettext(session.preferredLocale(), localizationKey, library.name);
+            session.endDialog(`${message} ${newTrigger}`);
+        }
     }
-]);
+]).cancelAction('cancelChangeTriggerAction', 'cancel_confirmation', {
+    matches: /^nevermind$|^cancel$|^exit$/i
+});
 
 library.dialog('update', [
     (session, args) => {
@@ -84,6 +91,8 @@ library.dialog('update', [
     }
 ]).beginDialogAction('triggerUpdateHelpAction', 'triggerUpdateHelp', {
     matches: /^help$/i
+}).cancelAction('cancelTriggerUpdateAction', 'cancel_confirmation', {
+    matches: /^nevermind$|^cancel$|^exit$/i
 });
 
 library.dialog('reset', [
