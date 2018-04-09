@@ -22,19 +22,21 @@ library.dialog('root', [
         });
     },
     (session, results) => {
-        const { index } = results.response,
-            lastOption = menu_options.length - 1;
-
         if (results.resumed === builder.ResumeReason.notCompleted) {
             // Too many retry attempts. Kick the user out
             session.endDialog('incomplete_dialog');
         }
-        else if (index === lastOption) {
-            session.endDialog('farewell');
-        }
-        else if (results.response) {
-            const targetDialog = menu_options[index];
-            session.beginDialog(`${targetDialog}:root`);
+        else {
+            const { index } = results.response,
+                lastOption = menu_options.length - 1;
+
+            if (index === lastOption) {
+                session.endDialog('farewell');
+            }
+            else if (results.response) {
+                const targetDialog = menu_options[index];
+                session.beginDialog(`${targetDialog}:root`);
+            }
         }
     },
     (session, results) => {

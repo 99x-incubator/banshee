@@ -13,7 +13,7 @@ library.dialog('root', [
     }
 ]).triggerAction({
     matches: /^help$/i,
-    onSelectAction: (session, args, next) => {
+    onSelectAction: (session, args) => {
         session.beginDialog(args.action, args);
     }
 });

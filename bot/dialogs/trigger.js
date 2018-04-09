@@ -25,22 +25,24 @@ library.dialog('root', [
         });
     },
     (session, results) => {
-        const { index } = results.response,
-            lastOption = trigger_options.length - 1;
-
         if (results.resumed === builder.ResumeReason.notCompleted) {
             // Too many retry attempts. Kick the user out
             session.endDialog('incomplete_dialog');
         }
-        else if (index === lastOption) {
-            session.endDialog();
-        }
-        else if (results.response) {
-            const targetDialog = trigger_options[index];
-            session.beginDialog(`trigger:${targetDialog}`);
+        else {
+            const { index } = results.response,
+                lastOption = trigger_options.length - 1;
+
+            if (index === lastOption) {
+                session.endDialog();
+            }
+            else if (results.response) {
+                const targetDialog = trigger_options[index];
+                session.beginDialog(`trigger:${targetDialog}`);
+            }
         }
     },
-    (session, results, next) => {
+    (session, results) => {
         if (results.resumed === builder.ResumeReason.canceled) {
             session.endDialog();
         }
@@ -68,6 +70,7 @@ library.dialog('root', [
 library.dialog('update', [
     (session, args) => {
         if (args && args.reprompt) {
+            session.dialogData.reprompted = true;
             builder.Prompts.text(session, 'enter_trigger_reprompt');
         }
         else {
@@ -83,10 +86,22 @@ library.dialog('update', [
             session.endDialogWithResult({ response });
         }
         else {
-            // Try again
-            session.replaceDialog('trigger:update', {
-                reprompt: true
-            });
+            const { reprompted } = session.dialogData;
+
+            if (reprompted) {
+                // Too many retry attempts. Kick the user out
+                session.send('incomplete_dialog');
+
+                session.endDialogWithResult({
+                    resumed: builder.ResumeReason.canceled
+                });
+            }
+            else {
+                // Try again
+                session.replaceDialog('trigger:update', {
+                    reprompt: true
+                });
+            }
         }
     }
 ]).beginDialogAction('triggerUpdateHelpAction', 'triggerUpdateHelp', {
@@ -104,7 +119,7 @@ library.dialog('reset', [
 
 // Contextual help for trigger update
 library.dialog('triggerUpdateHelp',
-    (session, args, next) => {
+    (session, args) => {
         session.send('trigger_update_help');
         session.endDialog('trigger_update_further_help');
     }
